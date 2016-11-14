@@ -1,0 +1,82 @@
+buildscript {
+    ext {
+    }
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        //classpath 'org.springframework:springloaded:1.2.0.RELEASE'
+        classpath 'org.springframework:springloaded:1.2.6.RELEASE'
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'idea'
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.7'
+    compile 'org.slf4j:slf4j-api:1.7.15'
+
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+
+    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-devtools")
+
+    compile "joda-time:joda-time:2.9.4"
+
+    testCompile 'junit:junit:4.11'
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ['src/main/java']
+        }
+        java {
+            srcDirs = []
+        }
+    }
+
+    test {
+        groovy {
+            srcDirs = ['src/test/java']
+        }
+        java {
+            srcDirs = []
+        }
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Camden.RELEASE"
+    }
+}
+
+bootRun {
+    addResources = true
+}
+
