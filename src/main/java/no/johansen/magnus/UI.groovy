@@ -10,7 +10,7 @@ public class UI {
     @RequestMapping("magnus")
     def ModelAndView magnus() {
         println "in magnus()....."
-        String name = "Magnus Pandalover Johansen"
+        def s = "Livet som panda"
         return new ModelAndView("magnus/main", "name", name)
     }
 }
